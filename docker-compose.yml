@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  client-backend:
+    image: app-for-intern
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      service-db:
+        condition: service_healthy
+    environment:
+      - SERVER_PORT= 8080
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://service-db/BankDeposits
+
+  service-db:
+    image: postgres:13.10
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: BankDeposits
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready", "-d", "BankDeposits"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db_infrastructure/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
+      - db-data:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  db-data:
+    driver: local

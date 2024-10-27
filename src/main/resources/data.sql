@@ -1,0 +1,1 @@
+INSERT INTO legal_form VALUES ('ИП'), ('ОАО'), ('ООО'), ('ЗАО'), ('Самозанятый') ON CONFLICT DO NOTHING;
