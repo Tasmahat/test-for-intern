@@ -58,9 +58,8 @@ jobs:
       - name: Build Docker Image
         run: docker build . -t app-for-intern
         env:
-          POSTGRES_HOST: root
-          POSTGRES_USER: root
-          POSTGRES_PASSWORD: root
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
         
       # Set up BuildKit Docker container builder to be able to build
       # multi-platform images and export cache
