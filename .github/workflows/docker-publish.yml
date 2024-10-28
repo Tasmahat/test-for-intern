@@ -35,9 +35,6 @@ jobs:
           POSTGRES_DB: BankDeposits
         ports:
           - "5432:5432"
-        volumes:
-          - ./db_infrastructure/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
-          - db-data:/var/lib/postgresql/data
           
     permissions:
       contents: read
