@@ -34,7 +34,7 @@ jobs:
           POSTGRES_PASSWORD: root
           POSTGRES_DB: BankDeposits
         options: |
-          --health-cmd pg_isready
+          --health-cmd "pg_isready -d BankDeposits"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 3
