@@ -80,8 +80,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
         
       - name: Build Docker Image
-        run: |
-          docker build -t app-for-intern .
+        run: docker build . -t app-for-intern
 
         
 
