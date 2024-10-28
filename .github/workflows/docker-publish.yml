@@ -43,10 +43,7 @@ jobs:
       # with sigstore/fulcio when running outside of PRs.
       id-token: write
 
-    steps:
-      - name: Initiate Database
-        run: psql -f db_infrastructure/create_db.sql postgresql://root:root@localhost:5432/BankDeposits
-    
+    steps:    
       - name: Checkout repository
         uses: actions/checkout@v4
 
