@@ -45,7 +45,7 @@ jobs:
 
     steps:
       - name: Initiate Database
-        run: psql -f initdb/init.sql postgresql://root:root@localhost:5432/BankDeposits
+        run: psql -f db_infrastructure/create_db.sql postgresql://root:root@localhost:5432/BankDeposits
     
       - name: Checkout repository
         uses: actions/checkout@v4
