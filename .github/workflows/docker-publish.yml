@@ -14,6 +14,7 @@ on:
     tags: [ 'v*.*.*' ]
   pull_request:
     branches: [ "master" ]
+   
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -25,6 +26,23 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    services:
+      postgres: 
+        image: postgres:13.10
+        env:
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: root
+          POSTGRES_DB: BankDeposits
+        options: |
+          --health-cmd ["CMD-SHELL", "pg_isready", "-d", "BankDeposits"]
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 3
+        ports:
+          - "5432:5432"
+        volumes:
+          - ./db_infrastructure/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
+          - db-data:/var/lib/postgresql/data
     permissions:
       contents: read
       packages: write
@@ -68,12 +86,13 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      # Build and push Docker image with Buildx (don't push on PR)
-      # https://github.com/docker/build-push-action
-      - name: Build and push Docker images
+      - name: Build image with DB
+        
+      - name: Build Docker Image
         run: |
-          docker-compose -f docker-compose.yml build
-          docker-compose -f docker-compose.yml push
+          docker build ./test-for-intern -t app-for-intern
+
+        
 
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
