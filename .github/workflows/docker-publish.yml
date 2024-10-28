@@ -44,6 +44,9 @@ jobs:
       id-token: write
 
     steps:
+      - name: Initiate Database
+        run: psql -f initdb/init.sql postgresql://root:root@localhost:5432/BankDeposits
+    
       - name: Checkout repository
         uses: actions/checkout@v4
 
