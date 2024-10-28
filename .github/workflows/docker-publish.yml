@@ -33,16 +33,9 @@ jobs:
           POSTGRES_USER: root
           POSTGRES_PASSWORD: root
           POSTGRES_DB: BankDeposits
-        options: |
-          --health-cmd "pg_isready -d BankDeposits"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 3
         ports:
           - "5432:5432"
-        volumes:
-          - ./db_infrastructure/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
-          - db-data:/var/lib/postgresql/data
+          
     permissions:
       contents: read
       packages: write
