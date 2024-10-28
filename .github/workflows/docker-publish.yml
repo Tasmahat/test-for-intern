@@ -81,7 +81,7 @@ jobs:
         
       - name: Build Docker Image
         run: |
-          docker build ./test-for-intern -t app-for-intern
+          docker build -t app-for-intern .
 
         
 
